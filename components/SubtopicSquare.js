@@ -2,7 +2,8 @@ import React from 'react'
 import {
   View,
   Image,
-  StyleSheet
+  StyleSheet,
+  TouchableHighlight
 } from 'react-native'
 
 import {
@@ -55,14 +56,14 @@ export default class SubtopicSquare extends React.Component {
   render() {
     let imageSource = { uri: g.IMAGE_BASE + this.props.subtopic.image }
     return (
-      <View style={[styles.outer]}>
+      <TouchableHighlight onPress={this.props.onPress} style={[styles.outer]}>
         <Image {...this.props} source={imageSource} style={[styles.square]}>
           { range(20, 120).map((i) => makeLine(1, 160, (120-i)/120)) }
           <View style={styles.title}>
             <MediumText style={styles.heavy}>{this.props.subtopic.name}</MediumText>
           </View>
         </Image>
-      </View>
+      </TouchableHighlight>
     ) 
   }
 }

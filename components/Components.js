@@ -8,7 +8,7 @@ import {
   TouchableHighlight
 } from 'react-native';
 
-import { css } from '../constants/Constants';
+import { g, css } from '../constants/Constants';
 import Layout from '../constants/Layout';
 
 let styles = StyleSheet.create({
@@ -72,13 +72,35 @@ let styles = StyleSheet.create({
   lightOverlay: {
     flex: 1,
     backgroundColor: 'rgba(255,255,255,0.8)'
+  },
+
+  smallIconContainer: {
+    height: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginLeft: 4,
+    marginRight: 4
+  },
+  smallIcon: {
+    height: 12,
+    width: 12
+  },
+  iconContainer: {
+    height: 24,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  icon: {
+    height: 24,
+    width: 24
   }
+
 })
 
 export class CenteredRow extends React.Component {
   render() {
     return (
-      <View {...this.props} style={[this.props.style, styles.centeredRow]}>
+      <View {...this.props} style={[styles.centeredRow, this.props.style]}>
         { this.props.children }
       </View>
     )
@@ -88,7 +110,7 @@ export class CenteredRow extends React.Component {
 export class CenteredColumn extends React.Component {
   render() {
     return (
-      <View {...this.props} style={[this.props.style, styles.centeredColumn]}>
+      <View {...this.props} style={[styles.centeredColumn, this.props.style]}>
         { this.props.children }
       </View>
     )
@@ -156,6 +178,35 @@ Text_.defaultProps = {
 }
 
 export { Text_ as Text };
+
+export class SmallIcon extends React.Component {
+  render() {
+    let source = this.props.source
+    if (!source.startsWith('http')) {
+      source = g.STATIC_HOST + source
+    }
+    return (
+      <View style={styles.smallIconContainer}>
+        <Image source={{ uri: source }} style={styles.smallIcon} />
+      </View>
+    )
+  }
+}
+
+export class Icon extends React.Component {
+  render() {
+    let source = this.props.source
+    if (!source.startsWith('http')) {
+      source = g.STATIC_HOST + source
+    }
+    return (
+      <View style={styles.iconContainer}>
+        <Image source={{ uri: source }} style={styles.icon} />
+      </View>
+    )
+  }
+}
+
 
 export class DarkBackground extends React.Component {
   render() {

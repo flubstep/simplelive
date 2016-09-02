@@ -4,6 +4,7 @@
 
 const Globals = {
   STRIPE_PUBLIC_KEY: "pk_test_7nhPM5nEnJXyCsynqWj6QuVQ",
+  STATIC_HOST: 'http://simplehabit.press',
   BASE_API_URL: process.env.BASE_API_URL || 'https://dev-guarded-dawn-91257.herokuapp.com',
   IMAGE_BASE: "https://bucketeer-760d0a32-a78c-4335-9090-9206d2933331.s3.amazonaws.com/",
   DOWNLOAD_APP_HREF: "https://itunes.apple.com/app/apple-store/id1093360165?pt=118159503&ct=website%20preview&mt=8",

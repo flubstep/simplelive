@@ -9,35 +9,30 @@ import {
   ScrollView
 } from 'react-native'
 
-import Layout from '../constants/Layout'
+import Swiper from 'react-native-swiper'
+
 import { Colors } from '../constants/Constants'
 import { MonoText } from '../components/StyledText'
 import {
   Text,
   CenteredColumn,
   Button,
-  DarkBackground
+  DarkBackground,
+  SmallIcon
 } from '../components/Components'
 
 import Api from '../api/Api'
+import LiveRoom from '../api/LiveRoom'
 
-import SubtopicSquare from '../components/SubtopicSquare'
+import SubtopicCarousel from '../components/SubtopicCarousel'
 import Animated from '../components/Animated'
+import Username from '../components/Username'
+import RoomPreview from '../components/RoomPreview'
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.darkest,
-  },
-  carousel: {
-  },
-  carouselContainer: {
-    height: 176 + 16*2,
-    width: Layout.window.width,
-    paddingTop: 16,
-    paddingBottom: 16,
-    marginBottom: 16,
-    backgroundColor: 'rgba(0,0,0,0.6)'
   }
 })
 
@@ -46,44 +41,61 @@ export default class MeditationRoomScreen extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      subtopics: []
+      currentIndex: 0,
+      subtopics: [],
+      roomsLoaded: true,
+      rooms: [{ id: 'abc', host: { name: "Blarn"}, numParticipants: 3 }]
     }
   }
 
   componentDidMount() {
     this.fetchSubtopics()
+    LiveRoom.onRoomList((rooms) => {
+      this.setState({ roomsLoaded: true, rooms: rooms })
+    })
   }
 
   async fetchSubtopics() {
     let subtopics = await Api.subtopics.get({ enabled: true, show: true })
-    this.setState({ subtopics })
+    this.setState({ subtopics: subtopics.slice(0, 15) })
+  }
+
+  onPress(e) {
+    console.log("pressed")
+    this.setState({
+      currentIndex: 1
+    })
   }
 
   render() {
     return (
       <DarkBackground>
-        <CenteredColumn>
-          <View style={styles.carouselContainer}>
-            <ScrollView
-              style={styles.carousel}
-              horizontal={true}
-              decelerationRate={"normal"}
-              automaticallyAdjustInsets={false}
-              showsHorizontalScrollIndicator={false}
-              >
-              {
-                this.state.subtopics.map((s) => (
-                  <Animated.Opacity key={s._id}>
-                    <SubtopicSquare subtopic={s} />
-                  </Animated.Opacity>
-                ))
-              }
-            </ScrollView>
-          </View>
-          <Animated.Upwards>
-            <Button onPress={() => { return false }}>HOST A NEW MEDITATION</Button>
-          </Animated.Upwards>
-        </CenteredColumn>
+        <Swiper
+          horizontal={false}
+          loop={false}
+          showsPagination={false}
+          index={0}
+          >
+          <CenteredColumn style={{ justifyContent: 'space-around' }}>
+            {
+              this.state.roomsLoaded ? (
+                <View>
+                  {
+                    this.state.rooms.map((room) => (
+                      <RoomPreview key={room.id} room={room} />
+                    ))
+                  }
+                </View>
+              ) : null
+            }
+            <Animated.Upwards>
+              <Button onPress={(e) => this.onPress(e)}>HOST A NEW SESSION</Button>
+            </Animated.Upwards>
+          </CenteredColumn>
+          <CenteredColumn>
+            <SubtopicCarousel subtopics={this.state.subtopics} />
+          </CenteredColumn>
+        </Swiper>
       </DarkBackground>
     );
   }

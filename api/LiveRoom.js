@@ -2,6 +2,16 @@ import { EventEmitter } from 'events';
 import { s } from '../constants/Constants';
 import { find, keys } from 'lodash';
 
+import firebase from 'firebase';
+
+let config = {
+  apiKey: "AIzaSyCT3jdGcJ2evW2vGBQzmYncGtymyyszh8M",
+  authDomain: "simplehabit-press.firebaseapp.com",
+  databaseURL: "https://simplehabit-press.firebaseio.com",
+  storageBucket: "simplehabit-press.appspot.com",
+};
+firebase.initializeApp(config);
+
 /*
   room: 
     state: selecting | selected | playing | paused | completed
