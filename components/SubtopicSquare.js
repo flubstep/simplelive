@@ -12,6 +12,10 @@ import {
   CenteredRow
 } from './Components'
 
+import {
+  Components
+} from 'exponent';
+
 import { range } from 'lodash';
 
 import { Colors, g } from '../constants/Constants'
@@ -39,18 +43,6 @@ let styles = StyleSheet.create({
   }
 })
 
-// todo: is this really stupid?
-const makeLine = (height, width, opacity) => (
-  <View
-    key={opacity}
-    style={{
-      width: width,
-      height: height,
-      backgroundColor: 'rgba(0,0,0,' + opacity + ')'
-    }}
-  />
-)
-
 export default class SubtopicSquare extends React.Component {
 
   render() {
@@ -58,7 +50,7 @@ export default class SubtopicSquare extends React.Component {
     return (
       <TouchableHighlight onPress={this.props.onPress} style={[styles.outer]}>
         <Image {...this.props} source={imageSource} style={[styles.square]}>
-          { range(20, 120).map((i) => makeLine(1, 160, (120-i)/120)) }
+          <Components.LinearGradient style={{ width: 160, height: 160 }} colors={["rgba(0,0,0,0.8)", "rgba(0,0,0,0)"]} />
           <View style={styles.title}>
             <MediumText style={styles.heavy}>{this.props.subtopic.name}</MediumText>
           </View>
