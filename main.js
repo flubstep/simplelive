@@ -11,14 +11,10 @@ import {
   View,
 } from 'react-native';
 import {
-  NavigationProvider,
-  StackNavigation,
-} from '@exponent/ex-navigation';
-import {
   FontAwesome,
 } from '@exponent/vector-icons';
 
-import Router from './navigation/Router';
+import MeditationRoomScreen from './screens/MeditationRoomScreen';
 import cacheAssetsAsync from './utilities/cacheAssetsAsync';
 
 class AppContainer extends React.Component {
@@ -47,20 +43,8 @@ class AppContainer extends React.Component {
   render() {
     if (this.state.appIsReady) {
       let { notification } = this.props.exp;
-      let initialRoute = Router.getRoute('rootNavigation', {notification});
-
       return (
-        <View style={styles.container}>
-          <NavigationProvider router={Router}>
-            <StackNavigation
-              id="root"
-              initialRoute={initialRoute}
-            />
-          </NavigationProvider>
-
-          {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-          {Platform.OS === 'android' && <View style={styles.statusBarUnderlay} />}
-        </View>
+        <MeditationRoomScreen />
       );
     } else {
       return <Exponent.Components.AppLoading />;

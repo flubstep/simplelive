@@ -14,6 +14,9 @@ export default async function registerForPushNotificationsAsync() {
   // install, so this will only ask on iOS
   let { status } = await Permissions.askAsync(Permissions.REMOTE_NOTIFICATIONS);
 
+  // Just break early to keep this code around.
+  return;
+
   // Stop here if the user did not grant permissions
   if (status !== 'granted') {
     return;

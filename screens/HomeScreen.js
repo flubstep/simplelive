@@ -1,18 +1,24 @@
 import React, {
   PropTypes,
 } from 'react';
+
 import {
   Image,
   Linking,
   Platform,
   ScrollView,
   StyleSheet,
-  Text,
   TouchableOpacity,
   View,
 } from 'react-native';
 
+import { Colors } from '../constants/Constants';
 import { MonoText } from '../components/StyledText';
+import {
+  Text,
+  CenteredColumn,
+  Button
+} from '../components/Components';
 
 export default class HomeScreen extends React.Component {
   static route = {
@@ -24,66 +30,19 @@ export default class HomeScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <ScrollView
-          style={styles.container}
-          contentContainerStyle={styles.contentContainer}>
-
-          <View style={styles.welcomeContainer}>
-            <Text style={styles.welcomeText}>
-              Welcome to
-            </Text>
-
-            <Image
-              source={require('../assets/images/exponent-wordmark.png')}
-              style={styles.welcomeImage}
-            />
-          </View>
-
-          <View style={styles.getStartedContainer}>
-            <Text style={styles.getStartedText}>
-              Get started by opening
-            </Text>
-
-            <View style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>
-              <MonoText style={styles.codeHighlightText}>screens/HomeScreen.js</MonoText>
-            </View>
-
-            <Text style={styles.getStartedText}>
-              Change that shit!
-            </Text>
-          </View>
-
-          <View style={styles.helpContainer}>
-            <TouchableOpacity onPress={this._handleHelpPress} style={styles.helpLink}>
-              <Text style={styles.helpLinkText}>
-                Help, it didn’t automatically reload!
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </ScrollView>
-
-        <View style={styles.tabBarInfoContainer}>
-          <Text style={styles.tabBarInfoText}>
-            This is a tab bar. You can edit it in:
-          </Text>
-
-          <View style={[styles.codeHighlightContainer, styles.navigationFilename]}>
-            <MonoText style={styles.codeHighlightText}>navigation/RootNavigation.js</MonoText>
-          </View>
-        </View>
+        <CenteredColumn>
+          <Text>Hey, listen.</Text>
+          <Button onPress={() => { return false }}>HOST A NEW MEDITATION</Button>
+        </CenteredColumn>
       </View>
     );
-  }
-
-  _handleHelpPress = () => {
-    Linking.openURL('https://docs.getexponent.com/versions/v8.0.0/guides/up-and-running.html#can-t-see-your-changes');
   }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.darkest,
   },
   contentContainer: {
     paddingTop: 80,
