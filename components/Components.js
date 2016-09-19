@@ -8,7 +8,7 @@ import {
   TouchableHighlight
 } from 'react-native';
 
-import { g, css } from '../constants/Constants';
+import { Colors, g, css } from '../constants/Constants';
 import Layout from '../constants/Layout';
 
 let styles = StyleSheet.create({
@@ -28,13 +28,22 @@ let styles = StyleSheet.create({
   },
 
   button: {
-    borderColor: '#FFFFFF',
+    backgroundColor: Colors.teal,
     borderWidth: 1.2,
-    borderRadius: 16,
+    borderRadius: 3,
     padding: 16,
     height: 56,
     alignItems: 'center',
     justifyContent: 'center'
+  },
+
+  buttonText: {
+    fontSize: 18,
+    color: Colors.white
+  },
+
+  disabledButton: {
+    opacity: 0.5
   },
 
   baseText: {
@@ -120,20 +129,28 @@ export class CenteredColumn extends React.Component {
 // todo: button
 export class Button extends React.Component {
   render() {
-    return (
-      <TouchableHighlight {...this.props} style={[this.props.style, styles.button]}>
-        <View>
+    if (this.props.disabled) {
+      return (
+        <View {...this.props} style={[this.props.style, styles.button, styles.disabledButton]}>
           <SmallText style={[styles.buttonText, styles.heavy]}>{ this.props.children }</SmallText>
         </View>
-      </TouchableHighlight>
-    )
+      )
+    } else {
+      return (
+        <TouchableHighlight {...this.props} style={[this.props.style, styles.button]}>
+          <View>
+            <SmallText style={[styles.buttonText, styles.heavy]}>{ this.props.children }</SmallText>
+          </View>
+        </TouchableHighlight>
+      )
+    }
   }
 }
 
 export class SmallText extends React.Component {
   render() {
     return (
-      <Text {...this.props} style={[this.props.style, styles.baseText, styles.smallText]}>
+      <Text {...this.props} style={[styles.baseText, styles.smallText, this.props.style]}>
         { this.props.children }
       </Text>
     );
@@ -143,7 +160,7 @@ export class SmallText extends React.Component {
 export class MediumText extends React.Component {
   render() {
     return (
-      <Text {...this.props} style={[this.props.style, styles.baseText, styles.mediumText]}>
+      <Text {...this.props} style={[styles.baseText, styles.mediumText, this.props.style]}>
         { this.props.children }
       </Text>
     );
@@ -153,7 +170,7 @@ export class MediumText extends React.Component {
 export class LargeText extends React.Component {
   render() {
     return (
-      <Text {...this.props} style={[this.props.style, styles.baseText, styles.largeText]}>
+      <Text {...this.props} style={[styles.baseText, styles.largeText, this.props.style]}>
         { this.props.children }
       </Text>
     );

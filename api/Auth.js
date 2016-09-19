@@ -2,92 +2,96 @@
  * @providesModule Auth
  */
 
-'use strict';
+'use strict'
 
-import uuid from 'uuid';
+import {
+  AsyncStorage
+} from 'react-native'
 
-import { g } from '../constants/Constants';
+import uuid from 'uuid'
 
-const BASE_URL = g.BASE_API_URL;
-const AUTH_KEY = "simplehabit:auth:token";
+import { g } from '../constants/Constants'
+
+const BASE_URL = g.BASE_API_URL
+const AUTH_KEY = "simplehabit:auth:token"
 const LOCAL_ID_KEY = "simplehabit:auth:localid"
 
 
 // From: http://stackoverflow.com/questions/1714786/querystring-encoding-of-a-javascript-object
 function uriSerialize (obj) {
-  let str = [];
+  let str = []
   for(var p in obj)
     if (obj.hasOwnProperty(p)) {
-      str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+      str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]))
     }
-  return str.join("&");
+  return str.join("&")
 }
 
 
 function currentToken() {
-  return localStorage.getItem(AUTH_KEY);
+  return AsyncStorage.getItem(AUTH_KEY)
 }
 
 
 function clearToken() {
-  localStorage.removeItem(AUTH_KEY);
+  return AsyncStorage.removeItem(AUTH_KEY)
 }
 
 
 function setToken(token) {
-  localStorage.setItem(AUTH_KEY, token);
+  return AsyncStorage.setItem(AUTH_KEY, token)
 }
 
 
-function localId() {
-  let id = localStorage.getItem(LOCAL_ID_KEY)
+async function localId() {
+  let id = await AsyncStorage.getItem(LOCAL_ID_KEY)
   if (!id) {
-    let newId = uuid.v4();
-    localStorage.setItem(LOCAL_ID_KEY, newId);
-    return newId;
+    let newId = uuid.v4()
+    await AsyncStorage.setItem(LOCAL_ID_KEY, newId)
+    return newId
   } else {
-    return id;
+    return id
   }
 }
 
 
 async function handleAuthResponse(response) {
   // todo: handle response error
-  let responseJson = await response.json();
+  let responseJson = await response.json()
   if (responseJson.success) {
-    setToken(responseJson.token);
+    await setToken(responseJson.token)
   } else {
-    console.warn("Unsucessful response from authentication handler.");
+    console.warn("Unsucessful response from authentication handler.")
     // todo: raise error?
   }
-  return responseJson;
+  return responseJson
 }
 
 async function loginWithPassword(email, password) {
 
-  let authUrl = BASE_URL + '/api/authenticate';
-  let data = { email, password };
+  let authUrl = BASE_URL + '/api/authenticate'
+  let data = { email, password }
   let response = await fetch(authUrl, {
     method: 'POST',
     body: uriSerialize(data),
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
     }
-  });
-  return handleAuthResponse(response);
+  })
+  return handleAuthResponse(response)
 }
 
 async function loginWithFacebook(accessToken) {
-  let authUrl = BASE_URL + '/api/authenticate/facebook';
-  let data = { access_token: accessToken };
+  let authUrl = BASE_URL + '/api/authenticate/facebook'
+  let data = { access_token: accessToken }
   let response = await fetch(authUrl, {
     method: 'POST',
     body: uriSerialize(data),
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
     }
-  });
-  return handleAuthResponse(response);
+  })
+  return handleAuthResponse(response)
 }
 
 export default {

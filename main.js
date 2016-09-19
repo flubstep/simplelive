@@ -1,21 +1,22 @@
 /** In order for logging to stream to XDE or the exp CLI you must import the
   * exponent module at some point in your app */
-import Exponent from 'exponent';
+import Exponent from 'exponent'
 
-import React from 'react';
+import React from 'react'
 import {
   AppRegistry,
   Platform,
   StatusBar,
   StyleSheet,
   View,
-} from 'react-native';
+} from 'react-native'
 import {
   FontAwesome,
-} from '@exponent/vector-icons';
+} from '@exponent/vector-icons'
 
-import MeditationRoomScreen from './screens/MeditationRoomScreen';
-import cacheAssetsAsync from './utilities/cacheAssetsAsync';
+import MeditationRoomScreen from './screens/MeditationRoomScreen'
+import LoginScreen from './screens/LoginScreen'
+import cacheAssetsAsync from './utilities/cacheAssetsAsync'
 
 class AppContainer extends React.Component {
   state = {
@@ -23,31 +24,32 @@ class AppContainer extends React.Component {
   }
 
   componentWillMount() {
-    this._loadAssetsAsync();
+    this._loadAssetsAsync()
   }
 
   async _loadAssetsAsync() {
     await cacheAssetsAsync({
       images: [
         require('./assets/images/exponent-wordmark.png'),
+        require('./assets/images/fb-logo-144.png')
       ],
       fonts: [
         FontAwesome.font,
         {'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf')},
       ],
-    });
+    })
 
-    this.setState({appIsReady: true});
+    this.setState({appIsReady: true})
   }
 
   render() {
     if (this.state.appIsReady) {
-      let { notification } = this.props.exp;
+      let { notification } = this.props.exp
       return (
-        <MeditationRoomScreen />
-      );
+        <LoginScreen />
+      )
     } else {
-      return <Exponent.Components.AppLoading />;
+      return <Exponent.Components.AppLoading />
     }
   }
 }
@@ -61,6 +63,6 @@ const styles = StyleSheet.create({
     height: 24,
     backgroundColor: 'rgba(0,0,0,0.2)',
   },
-});
+})
 
-AppRegistry.registerComponent('main', () => AppContainer);
+AppRegistry.registerComponent('main', () => AppContainer)

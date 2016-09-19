@@ -80,16 +80,14 @@ function createApiCall(paramOptions) {
 
     params = params || {};
 
-    /*
     if (options.authenticated) {
-      let token = Auth.currentToken();
+      let token = await Auth.currentToken();
       if (token) {
         headers['x-access-token'] = token;
       } else {
         console.warn("Attempting to make authenticated API call without token.");
       }
     }
-    */
 
     let cacheKey = serialize(params);
     if (options.cached) {
