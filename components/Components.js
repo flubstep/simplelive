@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import {
   View,
   Text,
@@ -6,10 +6,12 @@ import {
   StyleSheet,
   Animated,
   TouchableHighlight
-} from 'react-native';
+} from 'react-native'
 
-import { Colors, g, css } from '../constants/Constants';
-import Layout from '../constants/Layout';
+import { Colors, g, css } from '../constants/Constants'
+import Layout from '../constants/Layout'
+
+import backgroundImage from '../assets/images/onboarding-bg-1.png'
 
 let styles = StyleSheet.create({
 
@@ -72,10 +74,17 @@ let styles = StyleSheet.create({
 
   background: {
     flex: 1,
-    backgroundColor: 'red'
+    backgroundColor: 'red',
+    height: Layout.window.height,
+    width: Layout.window.width
   },
   darkOverlay: {
     flex: 1,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    height: Layout.window.height,
+    width: Layout.window.width,
     backgroundColor: 'rgba(0,0,0,0.8)'
   },
   lightOverlay: {
@@ -153,7 +162,7 @@ export class SmallText extends React.Component {
       <Text {...this.props} style={[styles.baseText, styles.smallText, this.props.style]}>
         { this.props.children }
       </Text>
-    );
+    )
   }
 }
 
@@ -163,7 +172,7 @@ export class MediumText extends React.Component {
       <Text {...this.props} style={[styles.baseText, styles.mediumText, this.props.style]}>
         { this.props.children }
       </Text>
-    );
+    )
   }
 }
 
@@ -173,7 +182,7 @@ export class LargeText extends React.Component {
       <Text {...this.props} style={[styles.baseText, styles.largeText, this.props.style]}>
         { this.props.children }
       </Text>
-    );
+    )
   }
 }
 
@@ -194,7 +203,7 @@ Text_.defaultProps = {
   size: 'medium'
 }
 
-export { Text_ as Text };
+export { Text_ as Text }
 
 export class SmallIcon extends React.Component {
   render() {
@@ -240,7 +249,7 @@ export class DarkBackground extends React.Component {
   }
 }
 DarkBackground.defaultProps = {
-  source: { uri: "http://simplehabit.press/static/onboarding-bg-1.png" }
+  source: backgroundImage
 }
 
 export class LightBackground extends React.Component {
@@ -253,5 +262,6 @@ export class LightBackground extends React.Component {
   }
 }
 LightBackground.defaultProps = {
-  source: { uri: "http://simplehabit.press/static/onboarding-bg-1.png" }
+  source: backgroundImage
 }
+

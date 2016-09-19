@@ -31,7 +31,8 @@ class AppContainer extends React.Component {
     await cacheAssetsAsync({
       images: [
         require('./assets/images/exponent-wordmark.png'),
-        require('./assets/images/fb-logo-144.png')
+        require('./assets/images/fb-logo-144.png'),
+        require('./assets/images/onboarding-bg-1.png')
       ],
       fonts: [
         FontAwesome.font,

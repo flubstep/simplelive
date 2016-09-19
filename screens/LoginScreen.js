@@ -38,7 +38,6 @@ import FacebookLoginButton from '../components/FacebookLoginButton'
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.darkest,
     alignItems: 'center',
     justifyContent: 'center'
   },
