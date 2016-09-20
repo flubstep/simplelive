@@ -34,7 +34,7 @@ let styles = StyleSheet.create({
     borderWidth: 1.2,
     borderRadius: 3,
     padding: 16,
-    height: 56,
+    height: 46,
     alignItems: 'center',
     justifyContent: 'center'
   },
@@ -227,7 +227,7 @@ export class Icon extends React.Component {
     }
     return (
       <View style={styles.iconContainer}>
-        <Image source={{ uri: source }} style={styles.icon} />
+        <Image source={source} style={styles.icon} />
       </View>
     )
   }

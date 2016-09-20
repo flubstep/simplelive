@@ -195,7 +195,8 @@ LiveRoom.onRoomList = (callback) => {
       let info = {
         id: roomId,
         host: room.participants[room.host],
-        numParticipants: keys(room.participants).length
+        numParticipants: keys(room.participants).length,
+        subtopic: room.selectedIndex ? room.meditations[room.selectedIndex] : null
       };
       if (info.host && info.host.name) {
         ret.push(info)
