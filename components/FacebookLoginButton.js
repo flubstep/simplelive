@@ -4,7 +4,8 @@ import {
   Image,
   StyleSheet,
   Animated,
-  TouchableHighlight
+  TouchableHighlight,
+  Alert
 } from 'react-native'
 
 import Exponent from 'exponent'
@@ -51,7 +52,16 @@ export default class FacebookLoginButton extends React.Component {
         permissions: ['email']
       }
     )
-    UserStatus.loginWithFacebook(token)
+    let response = await UserStatus.loginWithFacebook(token)
+    if (response.success === false || response.error) {
+      Alert.alert(
+        "Problem with Facebook login",
+        "Sorry, we weren't able to log you in.",
+        [
+          { text: 'Rats!' }
+        ]
+      )
+    }
   }
 
   render() {

@@ -8,7 +8,8 @@ import {
   View,
   TextInput,
   ScrollView,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
+  Alert
 } from 'react-native'
 
 import UserStatus from '../api/UserStatus'
@@ -98,6 +99,7 @@ export default class LoginScreen extends React.Component {
       inputting: false,
       submitted: false
     }
+    this.submit = () => this._submit()
   }
 
   onFocus = () => {
@@ -112,12 +114,24 @@ export default class LoginScreen extends React.Component {
     })
   }
 
-  submit = () => {
+  async _submit() {
     // todo: error check the input fields
     this.setState({
       submitted: true
     })
-    UserStatus.loginWithPassword(this.state.email, this.state.password)
+    let response = await UserStatus.loginWithPassword(this.state.email, this.state.password)
+    if (response.success === false || response.error) {
+      Alert.alert(
+        "Problem with logging",
+        "Sorry, we weren't able to log you in.",
+        [
+          { text: 'Rats!' }
+        ]
+      )
+      this.setState({
+        submitted: false
+      })
+    }
   }
 
   render() {

@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.darkest,
+    paddingTop: 20 // todo: constants?
   }
 })
 
@@ -45,7 +46,7 @@ export default class MeditationRoomScreen extends React.Component {
       currentIndex: 0,
       subtopics: [],
       roomsLoaded: true,
-      rooms: [{ id: 'abc', host: { name: "Blarn"}, numParticipants: 3 }]
+      rooms: []
     }
   }
 
@@ -69,37 +70,23 @@ export default class MeditationRoomScreen extends React.Component {
 
   render() {
     return (
-      <DarkBackground>
-        <Swiper
-          horizontal={false}
-          loop={false}
-          showsPagination={false}
-          index={0}
-          >
-          <CenteredColumn style={{ justifyContent: 'space-around' }}>
-            {
-              this.state.roomsLoaded ? (
-                <View>
-                  {
-                    this.state.rooms.map((room) => (
-                      <RoomPreview key={room.id} room={room} />
-                    ))
-                  }
-                </View>
-              ) : null
-            }
-            <Animated.Upwards>
-              <Button onPress={(e) => this.onPress(e)}>HOST A NEW SESSION</Button>
-            </Animated.Upwards>
-            <Animated.Upwards>
-              <Button onPress={() => UserStatus.logout()}>LOGOUT</Button>
-            </Animated.Upwards>
-          </CenteredColumn>
-          <CenteredColumn>
-            <SubtopicCarousel subtopics={this.state.subtopics} />
-          </CenteredColumn>
-        </Swiper>
-      </DarkBackground>
-    );
+      <View style={styles.container}>
+        <Animated.Upwards>
+          {
+            this.state.roomsLoaded ? (
+              <View>
+                {
+                  this.state.rooms.map((room) => (
+                    <RoomPreview key={room.id} room={room} />
+                  ))
+                }
+              </View>
+            ) : null
+          }
+          <Button onPress={(e) => this.onPress(e)}>HOST A NEW SESSION</Button>
+          <Button onPress={() => UserStatus.logout()}>LOGOUT</Button>
+        </Animated.Upwards>
+      </View>
+    )
   }
 }

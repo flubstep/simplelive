@@ -43,17 +43,19 @@ class UserStatus {
   }
 
   async loginWithPassword(email, password) {
-    await Auth.loginWithPassword(email, password)
+    let response = await Auth.loginWithPassword(email, password)
     this.clear()
     let userInfo = await this.get()
     this.events.emit('update', userInfo)
+    return response
   }
 
   async loginWithFacebook(token) {
-    await Auth.loginWithFacebook(token)
+    let response = await Auth.loginWithFacebook(token)
     this.clear()
     let userInfo = await this.get()
     this.events.emit('update', userInfo)
+    return response
   }
 
   async get() {
