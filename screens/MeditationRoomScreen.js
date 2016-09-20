@@ -63,6 +63,9 @@ const styles = StyleSheet.create({
   roomsContainer: {
     marginTop: 16
   },
+  roomContainer: {
+    marginBottom: 16
+  },
   bottom: {
     position: 'absolute',
     bottom: 0,
@@ -123,7 +126,9 @@ export default class MeditationRoomScreen extends React.Component {
                 <View style={styles.roomsContainer}>
                   {
                     this.state.rooms.map((room) => (
-                      <RoomPreview key={room.id} room={room} />
+                      <View key={room.id} style={styles.roomContainer}>
+                        <RoomPreview room={room} />
+                      </View>
                     ))
                   }
                 </View>

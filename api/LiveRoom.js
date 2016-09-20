@@ -198,7 +198,7 @@ LiveRoom.onRoomList = (callback) => {
         numParticipants: keys(room.participants).length,
         subtopic: room.selectedIndex ? room.meditations[room.selectedIndex] : null
       };
-      if (info.host && info.host.name) {
+      if (info.host && info.host.name && info.subtopic) {
         ret.push(info)
       }
     });
