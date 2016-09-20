@@ -11,6 +11,8 @@ import {
   TouchableWithoutFeedback
 } from 'react-native'
 
+import UserStatus from '../api/UserStatus'
+
 import KeyboardResponsiveView from 'react-native-keyboard-responsive-view'
 import dismissKeyboard from 'dismissKeyboard'
 
@@ -86,14 +88,15 @@ const styles = StyleSheet.create({
   }
 })
 
-export default class MeditationRoomScreen extends React.Component {
+export default class LoginScreen extends React.Component {
 
   constructor(props) {
     super(props)
     this.state = {
       email: '',
       password: '',
-      inputting: false
+      inputting: false,
+      submitted: false
     }
   }
 
@@ -110,7 +113,11 @@ export default class MeditationRoomScreen extends React.Component {
   }
 
   submit = () => {
-    console.log('okay')
+    // todo: error check the input fields
+    this.setState({
+      submitted: true
+    })
+    UserStatus.loginWithPassword(this.state.email, this.state.password)
   }
 
   render() {
@@ -160,7 +167,7 @@ export default class MeditationRoomScreen extends React.Component {
               </View>
               <View style={styles.section}>
                 <Button
-                  disabled={!(this.state.email.length > 0 && this.state.password.length >= 6)}
+                  disabled={this.state.submitted || !(this.state.email.length > 0 && this.state.password.length >= 6)}
                   style={styles.button}
                   onPress={this.submit}
                   >

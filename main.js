@@ -14,6 +14,7 @@ import {
   FontAwesome,
 } from '@exponent/vector-icons'
 
+import UserStatus from './api/UserStatus'
 import MeditationRoomScreen from './screens/MeditationRoomScreen'
 import LoginScreen from './screens/LoginScreen'
 import cacheAssetsAsync from './utilities/cacheAssetsAsync'
@@ -21,10 +22,16 @@ import cacheAssetsAsync from './utilities/cacheAssetsAsync'
 class AppContainer extends React.Component {
   state = {
     appIsReady: false,
+    userInfo: null
   }
 
   componentWillMount() {
     this._loadAssetsAsync()
+    UserStatus.subscribe((userInfo) => {
+      this.setState({
+        userInfo: userInfo
+      })
+    })
   }
 
   async _loadAssetsAsync() {
@@ -44,11 +51,15 @@ class AppContainer extends React.Component {
   }
 
   render() {
-    if (this.state.appIsReady) {
+    if (this.state.appIsReady && this.state.userInfo) {
       let { notification } = this.props.exp
-      return (
-        <LoginScreen />
-      )
+      if (this.state.userInfo._id) {
+        return <MeditationRoomScreen />
+      } else {
+        return (
+          <LoginScreen />
+        )
+      }
     } else {
       return <Exponent.Components.AppLoading />
     }

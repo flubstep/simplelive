@@ -23,6 +23,7 @@ import {
 
 import Api from '../api/Api'
 import LiveRoom from '../api/LiveRoom'
+import UserStatus from '../api/UserStatus'
 
 import SubtopicCarousel from '../components/SubtopicCarousel'
 import Animated from '../components/Animated'
@@ -61,7 +62,6 @@ export default class MeditationRoomScreen extends React.Component {
   }
 
   onPress(e) {
-    console.log("pressed")
     this.setState({
       currentIndex: 1
     })
@@ -90,6 +90,9 @@ export default class MeditationRoomScreen extends React.Component {
             }
             <Animated.Upwards>
               <Button onPress={(e) => this.onPress(e)}>HOST A NEW SESSION</Button>
+            </Animated.Upwards>
+            <Animated.Upwards>
+              <Button onPress={() => UserStatus.logout()}>LOGOUT</Button>
             </Animated.Upwards>
           </CenteredColumn>
           <CenteredColumn>
