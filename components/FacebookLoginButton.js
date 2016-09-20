@@ -7,6 +7,10 @@ import {
   TouchableHighlight
 } from 'react-native'
 
+import Exponent from 'exponent'
+
+import UserStatus from '../api/UserStatus'
+
 import { Text, SmallText } from './Components'
 import { Colors, g, css } from '../constants/Constants'
 import Layout from '../constants/Layout'
@@ -36,9 +40,23 @@ let styles = StyleSheet.create({
 
 export default class FacebookLoginButton extends React.Component {
 
+  constructor(props) {
+    super(props)
+    this.login = () => this._login()
+  }
+
+  async _login() {
+    let { type, token } = await Exponent.Facebook.logInWithReadPermissionsAsync(
+      '755007247967450', {
+        permissions: ['email']
+      }
+    )
+    UserStatus.loginWithFacebook(token)
+  }
+
   render() {
     return (
-      <TouchableHighlight onPress={this.props.onPress}>
+      <TouchableHighlight onPress={this.login}>
         <View style={styles.button}>
           <Image style={styles.fbLogo} source={fbLogo} />
           <SmallText style={styles.buttonText}>Continue with Facebook</SmallText>

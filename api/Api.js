@@ -10,7 +10,6 @@ import { random, sortBy } from 'lodash'
 import moment from 'moment'
 
 import Auth from './Auth'
-import Facebook from './Facebook'
 
 import { g } from '../constants/Constants'
 
@@ -176,12 +175,8 @@ const routing = new RESTResource('/api/routing')
  */
 
 async function _profilePhotoUrl() {
-  try {
-    let url = await Facebook.getProfilePhotoUrl()
-    return url
-  } catch (e) {
-    return '/static/default-profile.png'
-  }
+  // TODO: also get FB profile picture
+  return '/static/default-profile.png'
 }
 let profilePhotoUrl = asyncCachedFunction(_profilePhotoUrl)
 

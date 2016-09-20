@@ -49,8 +49,11 @@ class UserStatus {
     this.events.emit('update', userInfo)
   }
 
-  async loginWithFacebookToken(token) {
-
+  async loginWithFacebook(token) {
+    await Auth.loginWithFacebook(token)
+    this.clear()
+    let userInfo = await this.get()
+    this.events.emit('update', userInfo)
   }
 
   async get() {

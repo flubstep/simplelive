@@ -62,7 +62,6 @@ async function handleAuthResponse(response) {
     await setToken(responseJson.token)
   } else {
     console.warn("Unsucessful response from authentication handler.")
-    console.warn(responseJson)
     // todo: raise error?
   }
   return responseJson
